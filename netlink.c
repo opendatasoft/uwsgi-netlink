@@ -20,6 +20,8 @@ extern struct uwsgi_server uwsgi;
 
 */
 
+#define BUF_SIZE 65536
+
 int uwsgi_netlink_new(int type) {
 	int fd = socket(AF_NETLINK, SOCK_DGRAM, type);
 	if (fd < 0) {
@@ -81,10 +83,10 @@ static void netlink_socket_queue_unix_diag_run() {
 	if (uwsgi_netlink_sendmsg(fd, SOCK_DIAG_BY_FAMILY, NLM_F_DUMP|NLM_F_REQUEST, &udr, sizeof(struct unix_diag_req)) < 0) goto end;
 
 	// now wait for the response
-	uint8_t buf[8192];
+	uint8_t buf[BUF_SIZE];
 		int ret = uwsgi_waitfd_event(fd, 1, POLLIN);
 		if (ret <= 0) goto end;
-		ssize_t rlen = recv(fd, buf, 8192, 0);
+		ssize_t rlen = recv(fd, buf, BUF_SIZE, 0);
 		if (rlen <= 0) goto end;
 		struct nlmsghdr *nlh = (struct nlmsghdr *) buf;
 		while(NLMSG_OK(nlh, rlen)) {
