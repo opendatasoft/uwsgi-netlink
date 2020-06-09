@@ -20,7 +20,7 @@ extern struct uwsgi_server uwsgi;
 
 */
 
-#define BUF_SIZE 65536
+#define BUF_SIZE 8192
 
 int uwsgi_netlink_new(int type) {
 	int fd = socket(AF_NETLINK, SOCK_DGRAM, type);
