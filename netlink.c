@@ -84,6 +84,7 @@ static void netlink_socket_queue_unix_diag_run() {
 
 	// now wait for the response
 	uint8_t buf[BUF_SIZE];
+	for (;;) {
 		int ret = uwsgi_waitfd_event(fd, 1, POLLIN);
 		if (ret <= 0) goto end;
 		ssize_t rlen = recv(fd, buf, BUF_SIZE, 0);
@@ -127,6 +128,7 @@ static void netlink_socket_queue_unix_diag_run() {
 			
 			nlh = NLMSG_NEXT(nlh, rlen);
 		}
+	}
 
 end:
 	close(fd);
