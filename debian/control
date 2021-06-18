@@ -1,0 +1,25 @@
+Source: uwsgi-plugin-netlink
+Section: web
+Priority: optional
+Maintainer: Opendatasoft SRE Team <sre@opendatasoft.com>
+Build-Depends:
+  debhelper (>=9),
+  build-essential,
+  dh-python,
+  python-dev,
+  uuid-dev,
+  libcap-dev,
+  libssl-dev,
+  libpcre3-dev,
+  zlib1g-dev,
+  uwsgi,
+  uwsgi-core
+Standards-Version: 4.5.1
+
+Package: uwsgi-plugin-netlink
+Architecture: any
+Depends:
+  ${shlibs:Depends},
+  ${misc:Depends}
+Description: uWSGI plugin exposing netlink features
+ Integration with the Linux netlink subsystem

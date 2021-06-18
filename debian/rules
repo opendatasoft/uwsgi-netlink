@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+DH_VERBOSE := 1
+export DH_VERBOSE
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf .uwsgi_plugins_builder 
+
+override_dh_auto_build:
+	/usr/bin/uwsgi --build-plugin .
+
